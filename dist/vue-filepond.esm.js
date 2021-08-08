@@ -32,15 +32,15 @@ const isSupported = supported();
 
 // Setup initial prop types and update when plugins are added
 const getNativeConstructorFromType = (type) =>
-  ({
-    string: String,
-    boolean: Boolean,
-    array: Array,
-    function: Function,
-    int: Number,
-    serverapi: Object,
-    object: Object,
-  }[type]);
+({
+  string: String,
+  boolean: Boolean,
+  array: Array,
+  function: Function,
+  int: Number,
+  serverapi: Object,
+  object: Object,
+}[type]);
 
 // Activated props
 const props = {};
@@ -124,7 +124,7 @@ export default (...plugins) => {
       if (!isSupported) return;
 
       // get pond element
-      this._element = this.$el.querySelector("input");
+      this._element = document.querySelector(".filepond");
 
       // Map FilePond callback methods to Vue $emitters
       const options = events.reduce((obj, value) => {
@@ -164,7 +164,7 @@ export default (...plugins) => {
       const { detached } = this.$options;
 
       // no longer attached, clean up
-      if (!this.$el.offsetParent) {
+      if (!document.querySelector('#app').offsetParent) {
         detached.call(this);
         return;
       }
@@ -175,7 +175,7 @@ export default (...plugins) => {
       const mutationHandler = (mutations, observer) => {
         const removedNodes = (mutations[0] || {}).removedNodes || [];
         const removedNode = removedNodes[0];
-        if (!removedNode || !removedNode.contains(this.$el)) return;
+        if (!removedNode || !removedNode.contains(document.querySelector('#app'))) return;
         observer.disconnect();
         detached.call(this);
       };

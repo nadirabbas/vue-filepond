@@ -120,7 +120,7 @@
         // exit here if not supported
         if (!isSupported) return; // get pond element
 
-        this._element = this.$el.querySelector("input"); // Map FilePond callback methods to Vue $emitters
+        this._element = document.querySelector(".filepond"); // Map FilePond callback methods to Vue $emitters
 
         var options = events.reduce(function (obj, value) {
           obj[value] = function () {
@@ -158,7 +158,7 @@
         // reference to detached method
         var detached = this.$options.detached; // no longer attached, clean up
 
-        if (!this.$el.offsetParent) {
+        if (!document.querySelector('#app').offsetParent) {
           detached.call(this);
           return;
         } // if we're still attached it's likely a transition is running, we need to
@@ -169,7 +169,7 @@
         var mutationHandler = function mutationHandler(mutations, observer) {
           var removedNodes = (mutations[0] || {}).removedNodes || [];
           var removedNode = removedNodes[0];
-          if (!removedNode || !removedNode.contains(_this3.$el)) return;
+          if (!removedNode || !removedNode.contains(document.querySelector('#app'))) return;
           observer.disconnect();
           detached.call(_this3);
         }; // start observing parent element for changes to the DOM
